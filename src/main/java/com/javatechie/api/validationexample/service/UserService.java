@@ -1,5 +1,6 @@
 package com.javatechie.api.validationexample.service;
 
+import com.javatechie.api.validationexample.advice.UserNotFoundException;
 import com.javatechie.api.validationexample.dto.UserRequest;
 import com.javatechie.api.validationexample.entity.User;
 import com.javatechie.api.validationexample.repository.UserRepository;
@@ -26,7 +27,12 @@ public class UserService {
         return repository.findAll();
     }
 
-    public Optional<User> getUser(int id) {
+    public Optional<User> getUser(int id) throws UserNotFoundException {
+        User user = repository.findByUserId(id);
+        if (user == null) {
+            throw new UserNotFoundException("user not found with id : " + id);
+        }
+
         return Optional.ofNullable(repository.findByUserId(id));
     }
 }

@@ -1,5 +1,6 @@
 package com.javatechie.api.validationexample.controller;
 
+import com.javatechie.api.validationexample.advice.UserNotFoundException;
 import com.javatechie.api.validationexample.dto.UserRequest;
 import com.javatechie.api.validationexample.entity.User;
 import com.javatechie.api.validationexample.service.UserService;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUser(@PathVariable int id) {
+    public ResponseEntity<Optional<User>> getUser(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUser(id));
     }
 
